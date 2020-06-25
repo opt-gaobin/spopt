@@ -7,24 +7,24 @@ This solver is to solve the following optimization problem,
   
 where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity matrix.
 ### Examples
-1. the nearest symplectic matrix problem
+1. the nearest symplectic matrix problem:
 
-+ min ||X-A||^2_F, s.t.  X' J2n X = J2p.
+> min ||X-A||^2_F, s.t.  X' J2n X = J2p.
   
-2. minimization of the Brockett cost function
+2. minimization of the Brockett cost function:
 
-+ min trace(X'AXN-2BX'), s.t.  X' J2n X = J2p.
+> min trace(X'AXN-2BX'), s.t.  X' J2n X = J2p.
   
-3. symplectic eigenvalue problem
+3. symplectic eigenvalue problem:
 
-+ min trace(X'AX), s.t.  X' J2n X = J2p.
+> min trace(X'AX), s.t.  X' J2n X = J2p.
   
-4. symplectic model order reduction
+4. symplectic model order reduction:
 
-+ min ||M-XX^\dag M||, s.t.  X' J2n X = J2p, where X^\dag = J2p' X' J2n
+> min ||M-XX^\dag M||, s.t.  X' J2n X = J2p, where X^\dag = J2p' X' J2n
 
 # References
-Bin Gao, Nguyen Thanh Son, P.-A. Absil, Tatjana Stykel
+[Bin Gao](https://www.gaobin.cc/), [Nguyen Thanh Son](https://sites.google.com/view/ntson), [P.-A. Absil](https://sites.uclouvain.be/absil/), [Tatjana Stykel](https://www.uni-augsburg.de/en/fakultaet/mntf/math/prof/numa/team/tatjana-stykel/)
 1. Riemannian optimization on the symplectic Stiefel manifold
 2. Euclidean--metric-based Riemannian gradient method on the symplectic Stiefel manifold
 
