@@ -1,5 +1,5 @@
 # spopt
-A Matlab solver for Riemannian ***opt***imization on the ***s***ym***p***lectic Stiefel manifold
+A Matlab solver for Riemannian **opt**imization on the **s**ym**p**lectic Stiefel manifold
 
 ## Problems
 This solver is to solve the following optimization problem,
