@@ -1,12 +1,12 @@
 # spopt
-A Matlab solver for Riemannian optimization on the symplectic Stiefel manifold
+A Matlab solver for Riemannian **opt**imization on the **s**ym**p**lectic Stiefel manifold
 
 ## Problems
 This solver is to solve the following optimization problem,
 + min f(X), s.t.   X' J2n X = J2p
   
 where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity matrix.
-### Examples
+### Applications
 1. the nearest symplectic matrix problem:
 
 > min ||X-A||^2_F, s.t.  X' J2n X = J2p.
