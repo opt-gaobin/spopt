@@ -11,16 +11,20 @@ where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity
 1. the nearest symplectic matrix problem:
 
 > min ||X-A||^2_F, s.t.  X' J2n X = J2p.
+
+2. the extrinsic mean problem:
   
-2. minimization of the Brockett cost function:
+> min 1/N \sum_{i=1}^{i=N}||X-A_i||^2_F, s.t.  X' J2n X = J2p.
+  
+3. minimization of the Brockett cost function:
 
 > min trace(X'AXN-2BX'), s.t.  X' J2n X = J2p.
   
-3. symplectic eigenvalue problem:
+4. symplectic eigenvalue problem:
 
 > min trace(X'AX), s.t.  X' J2n X = J2p.
   
-4. symplectic model order reduction:
+5. symplectic model order reduction:
 
 > min ||M-XX^\dag M||, s.t.  X' J2n X = J2p, where X^\dag = J2p' X' J2n
 
