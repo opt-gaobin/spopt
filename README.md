@@ -3,15 +3,30 @@ A Matlab solver for Riemannian optimization on the symplectic Stiefel manifold
 
 ## Problems
 This solver is to solve the following optimization problem,
-> min f(X),
-  s.t.   X' J2n X = J2p
++ min f(X), s.t.   X' J2n X = J2p
   
 where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity matrix.
 ### Examples
-+ min ||X-A||^2_F, s.t.  X' J2n X = J2p.
+1. the nearest symplectic matrix problem
+
+  min ||X-A||^2_F, s.t.  X' J2n X = J2p.
+  
+2. minimization of the Brockett cost function
+
+  min trace(X'AXN-2BX'), s.t.  X' J2n X = J2p.
+  
+3. symplectic eigenvalue problem
+
+  min trace(X'AX), s.t.  X' J2n X = J2p.
+  
+4. symplectic model order reduction
+
+  min ||M-XX^\dag M||, s.t.  X' J2n X = J2p, where X^\dag = J2p' X' J2n
 
 # References
-+ Bin Gao, Nguyen Thanh Son, P.-A. Absil, Tatjana Stykel, [Riemannian optimization on the symplectic Stiefel manifold]()
+Bin Gao, Nguyen Thanh Son, P.-A. Absil, Tatjana Stykel
+1. [Riemannian optimization on the symplectic Stiefel manifold]()
+2. [Euclidean--metric-based Riemannian gradient method on the symplectic Stiefel manifold]()
 
 # Authors
 + [Bin Gao](https://www.gaobin.cc/) (UCLouvain, Belgium)
