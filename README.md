@@ -3,10 +3,11 @@ A Matlab solver for Riemannian ***opt***imization on the ***s***ym***p***lectic 
 
 ## Problems
 This solver is to solve the following optimization problem,
+
 + min f(X), s.t.   X' J2n X = J2p
   
 where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity matrix.
-### Applications
+## Applications
 1. the nearest symplectic matrix problem:
 
 > min ||X-A||^2_F, s.t.  X' J2n X = J2p.
@@ -23,15 +24,15 @@ where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity
 
 > min ||M-XX^\dag M||, s.t.  X' J2n X = J2p, where X^\dag = J2p' X' J2n
 
-# References
+## References
 [Bin Gao](https://www.gaobin.cc/), [Nguyen Thanh Son](https://sites.google.com/view/ntson), [P.-A. Absil](https://sites.uclouvain.be/absil/), [Tatjana Stykel](https://www.uni-augsburg.de/en/fakultaet/mntf/math/prof/numa/team/tatjana-stykel/)
 1. Riemannian optimization on the symplectic Stiefel manifold
 2. Euclidean--metric-based Riemannian gradient method on the symplectic Stiefel manifold
 
-# Authors
+## Authors
 + [Bin Gao](https://www.gaobin.cc/) (UCLouvain, Belgium)
 
-# Copyright
+## Copyright
 Copyright (C) 2020, Bin Gao
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
