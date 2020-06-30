@@ -40,8 +40,8 @@ function [X, out]= spopt(X, fun, opts, varargin)
 % -------------------------------------
 % Reference:
 %   Bin Gao, Nguyen Thanh Son, P.-A. Absil, Tatjana Stykel
-%   1. Riemannian optimization on the symplectic Stiefel manifold
-%   2. Euclidean-based Riemannian gradient method on the symplectic Stiefel manifold
+%   1. Riemannian optimization on the symplectic Stiefel manifold (https://arxiv.org/abs/2006.15226)
+%   2. Riemannian gradient method on the symplectic Stiefel manifold based on the Euclidean metric
 % Author: Bin Gao (https://www.gaobin.cc)
 %   Version 0.1 ... 2019/11
 %   Version 0.2 ... 2020/03: add Eucliean metric
