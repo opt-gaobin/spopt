@@ -198,7 +198,7 @@ for itr = 1 : opts.mxitr
             X = U*(ExpH(:,1:2*k)*expm(JWt));
             
             % direct computation based on quasi-geodesic curve
-            % U = [X,-dtX]; JW = [W(k+1:end,:); -W(1:k,:)];
+            % U = [XP,-dtX]; JW = [W(k+1:end,:); -W(1:k,:)];
             % if nls == 1; JZJZ = [-dtX(:,k+1:end) dtX(:,1:k)]'*[dtX(n+1:end,:); -dtX(1:n,:)]; end;
             % H = [-JW -JZJZ; eye2k -JW]; ExpH = expm(tau*H);
             % X = U*(ExpH(:,1:2*k)*expm(tau*JW));
