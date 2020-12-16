@@ -68,8 +68,8 @@ if ~isfield(opts, 'record');    opts.record = 0;     end
 
 % parameters for control the linear approximation in line search,
 if ~isfield(opts, 'tau');       opts.tau  = 1e-3;    end % initial stepsize
-if ~isfield(opts, 'maxtau');    opts.maxtau  = 1e5;  end % maximal stepsize
-if ~isfield(opts, 'mintau');    opts.mintau  = 1e-5;end % nimimal stepsize
+if ~isfield(opts, 'maxtau');    opts.maxtau  = 1e15;  end % maximal stepsize
+if ~isfield(opts, 'mintau');    opts.mintau  = 1e-15;end % nimimal stepsize
 if ~isfield(opts, 'rhols');     opts.rhols  = 1e-4;  end % linear-search condition
 if ~isfield(opts, 'eta');       opts.eta  = 0.1;     end % backtracking parameter
 if ~isfield(opts, 'gamma');     opts.gamma  = 0.85;  end % non-monotone parameter
