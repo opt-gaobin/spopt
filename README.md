@@ -37,7 +37,7 @@ where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity
 + [Bin Gao](https://www.gaobin.cc/) (UCLouvain, Belgium)
 
 ## Copyright
-Copyright (C) 2020, Bin Gao
+Copyright (C) 2020, Bin Gao, Nguyen Thanh Son, P.-A. Absil, Tatjana Stykel
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
