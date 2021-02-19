@@ -1,6 +1,6 @@
 function [X, out]= spopt(X, fun, opts, varargin)
 %%-------------------------------------------------------------------------
-% spopt is a solver for Optimization on the Symplectic Stiefel manifold:
+% spopt is a solver for optimization on the symplectic Stiefel manifold:
 %
 %   min f(X), s.t., X'*J_{2n}*X = J_{2k},
 %
@@ -40,12 +40,13 @@ function [X, out]= spopt(X, fun, opts, varargin)
 % -------------------------------------
 % Reference:
 %   Bin Gao, Nguyen Thanh Son, P.-A. Absil, Tatjana Stykel
-%   1. Riemannian optimization on the symplectic Stiefel manifold (https://arxiv.org/abs/2006.15226)
-%   2. Riemannian gradient method on the symplectic Stiefel manifold based on the Euclidean metric
+%   1. Riemannian optimization on the symplectic Stiefel manifold
+%   2. Geometry of the symplectic Stiefel manifold endowed with the Euclidean metric
 % Author: Bin Gao (https://www.gaobin.cc)
 %   Version 0.1 ... 2019/11
 %   Version 0.2 ... 2020/03: add Eucliean metric
-%   Version 1.0 ... 2020/06: Release at github: https://github.com/opt-gaobin/spopt
+%   Version 1.0 ... 2020/06: release at github: https://github.com/opt-gaobin/spopt
+%   Version 1.1 ... 2021/02: add Cayley retraction to Euclidean metric
 %--------------------------------------------------------------------------
 %% default setting
 if nargin < 2; error('[X, out]= spopt(X0, @fun, opts)'); end
@@ -67,18 +68,18 @@ if ~isfield(opts, 'mxitr');     opts.mxitr  = 1000;  end
 if ~isfield(opts, 'record');    opts.record = 0;     end
 
 % parameters for control the linear approximation in line search,
-if ~isfield(opts, 'tau');       opts.tau  = 1e-3;    end % initial stepsize
-if ~isfield(opts, 'maxtau');    opts.maxtau  = 1e5;  end % maximal stepsize
-if ~isfield(opts, 'mintau');    opts.mintau  = 1e-15;end % nimimal stepsize
+if ~isfield(opts, 'tau');       opts.tau    = 1e-3;  end % initial stepsize
+if ~isfield(opts, 'maxtau');    opts.maxtau = 1e5;   end % maximal stepsize
+if ~isfield(opts, 'mintau');    opts.mintau = 1e-15; end % nimimal stepsize
 if ~isfield(opts, 'rhols');     opts.rhols  = 1e-4;  end % linear-search condition
-if ~isfield(opts, 'eta');       opts.eta  = 0.1;     end % backtracking parameter
+if ~isfield(opts, 'eta');       opts.eta    = 0.1;   end % backtracking parameter
 if ~isfield(opts, 'gamma');     opts.gamma  = 0.85;  end % non-monotone parameter
-if ~isfield(opts, 'nt');        opts.nt  = 5;        end % max number of linear-search steps
+if ~isfield(opts, 'nt');        opts.nt       = 5;   end % max number of linear-search steps
 if ~isfield(opts, 'stepsize');  opts.stepsize = 1;   end % different strategies for stepsize
 
 % parameter for Riemannian optimization
-if ~isfield(opts, 'retr');      opts.retr = 1;       end
-if ~isfield(opts, 'pg');        opts.pg = 1;         end % different choices of Riemannian gradient
+if ~isfield(opts, 'retr');      opts.retr   = 1;     end % 1: Cayley, o.w.: quasi-geodesic
+if ~isfield(opts, 'pg');        opts.pg     = 1;     end % different choices of Riemannian gradient
 if ~isfield(opts, 'metric');    opts.metric = 1;     end % 1: Canonical-like, o.w.: Euclidean
 if ~isfield(opts, 'pm')                                  % parameter of canonical-like metric
     if opts.pg == 1
@@ -97,16 +98,8 @@ retr    = opts.retr;    pm      = opts.pm;      pg      = opts.pg;
 metric  = opts.metric;
 
 % save metric and solver
-if metric ~= 1
-    retr = 2; metricname = 'Euclidean'; % Cayley retraction cannot be applied to Euclidean metric
-else
-    metricname = 'Canonical-like';
-end
-if retr == 1
-    retrname = 'Cayley';
-else
-    retrname = 'quasi-geodesic';
-end
+if metric ~= 1; metricname = 'Euclidean'; else; metricname = 'Canonical-like'; end
+if retr == 1;   retrname   = 'Cayley';    else; retrname   = 'quasi-geodesic'; end
 %% ------------------------------------------------------------------------
 % Initialization
 J2k = [zeros(k) eye(k);-eye(k) zeros(k)];
@@ -122,7 +115,7 @@ if metric == 1
             PG = G - JX*invXXXJG + X*GX';
         else
             XJG = XJ'*G; JXXJG = JX*XJG;
-            PG = G-JXXJG- XJ*(JX'*G)+XJ*(JX'*JXXJG) + X*GX';
+            PG = G - JXXJG- XJ*(JX'*G)+ XJ*(JX'*JXXJG) + X*GX';
         end
     else
         PG = X*GX';
@@ -133,14 +126,26 @@ end
 
 if retr == 1
     invH = true; eye2n = eye(2*n); if k < n/2; invH = false; eye2k = eye(2*k); eye4k = eye(4*k); end
-    if invH
-        PGXJ = -PG*(XJ)'; H = PGXJ + PGXJ'; HJ = [-H(:,n+1:end), H(:,1:n)]; RJX = H*JX;
+    if metric == 1
+        if invH
+            PGXJ = -PG*(XJ)'; H = PGXJ + PGXJ'; HJ = [-H(:,n+1:end), H(:,1:n)]; RJX = H*JX;
+        else
+            U = [-PG, XJ]; PGJPG = [PG(n+1:end,:); -PG(1:n,:)]'*PG; VJU = [GX' J2k';PGJPG -GX];
+            VJX = [eye2k; GX(:,k+1:end) -GX(:,1:k)];
+            % direct way to get VJU and VJX
+            % U =  [-PG, XJ]; V = [XJ, -PG];	VJU = V'*[-U(n+1:end,:); U(1:n,:)];
+            % VJX = V'*JX;
+        end
     else
-        U = [-PG, XJ]; PGJPG = [PG(n+1:end,:); -PG(1:n,:)]'*PG; VJU = [GX' J2k';PGJPG -GX];
-        VJX = [eye2k; GX(:,k+1:end) -GX(:,1:k)];
-        % direct way to get VJU and VJX
-        % U =  [-PG, XJ]; V = [XJ, -PG];	VJU = V'*[-U(n+1:end,:); U(1:n,:)];
-        % VJX = V'*JX;
+        % activate only if "Euclidean + Cayley" ----------------
+        Omega = lyap(XX,-skewXJG); W = -JXG + XX*Omega; W = -0.5*(W+W');
+        PG = G - XJ*(0.5*JXG) - JX*Omega + XJ*(0.5*(XX*Omega));
+        if invH
+            PGXJ = -PG*(XJ)'; H = PGXJ + PGXJ'; HJ = [-H(:,n+1:end), H(:,1:n)]; RJX = H*JX;
+        else
+            U =  [-PG, XJ]; V = [XJ, -PG];	VJU = V'*[-U(n+1:end,:); U(1:n,:)];
+            VJX = V'*JX;
+        end
     end
 else
     eye2k = eye(2*k);
@@ -156,6 +161,7 @@ end
 XFeasi = norm(X'*JX - J2k,'fro');
 if metric == 1; dtX = PG*(XJ'*JX) + XJ*(PG'*JX); else; dtX = G - JX*Omega; end
 nrmG = norm(dtX, 'fro'); nrmG0 = nrmG; % initial gradient norm
+% -------------------------------------------------------
 % save history
 out.fvals = []; out.fvals(1) = F;
 out.kkts = [];  out.kkts(1) = nrmG;
@@ -185,7 +191,7 @@ for itr = 1 : opts.mxitr
         if retr == 1
             % Cayley
             if invH
-                [X, ~] = linsolve(eye2n - tau*HJ, XP + tau*RJX);
+                [X, ~] = linsolve(eye2n - (0.5*tau)*HJ, XP + (0.5*tau)*RJX);
             else
                 [aa, ~] = linsolve(eye4k + (0.5*tau)*VJU, VJX);
                 X = XP + U*(tau*aa);
@@ -225,7 +231,7 @@ for itr = 1 : opts.mxitr
                 PG = G - JX*invXXXJG + X*GX';
             else
                 XJG = XJ'*G; JXXJG = JX*XJG;
-                PG = G-JXXJG- XJ*(JX'*G)+XJ*(JX'*JXXJG) + X*GX';
+                PG = G - JXXJG - XJ*(JX'*G) + XJ*(JX'*JXXJG) + X*GX';
             end
         else
             PG = X*GX';
@@ -235,14 +241,26 @@ for itr = 1 : opts.mxitr
     end
     
     if retr == 1
-        if invH
-            PGXJ = -PG*(XJ)';  H = 0.5*(PGXJ + PGXJ');  HJ = [-H(:,n+1:end) H(:,1:n)];  RJX = H*JX;
+        if metric == 1
+            if invH
+                PGXJ = -PG*(XJ)';  H = PGXJ + PGXJ';  HJ = [-H(:,n+1:end) H(:,1:n)];  RJX = H*JX;
+            else
+                U =  [-PG, XJ]; PGJPG = [PG(n+1:end,:); -PG(1:n,:)]'*PG; VJU = [GX' J2k';PGJPG -GX];
+                VJX = [eye2k; GX(:,k+1:end) -GX(:,1:k)];
+                % direct way to get VJU and VJX
+                % U =  [-PG, XJ]; V = [XJ, -PG];	VJU = V'*[-U(n+1:end,:); U(1:n,:)];
+                % VJX = V'*JX;
+            end
         else
-            U =  [-PG, XJ]; PGJPG = [PG(n+1:end,:); -PG(1:n,:)]'*PG; VJU = [GX' J2k';PGJPG -GX];
-            VJX = [eye2k; GX(:,k+1:end) -GX(:,1:k)];
-            % direct way to get VJU and VJX
-            % U =  [-PG, XJ]; V = [XJ, -PG];	VJU = V'*[-U(n+1:end,:); U(1:n,:)];
-            % VJX = V'*JX;
+            % activate only if "Euclidean + Cayley" ----------------
+            Omega = lyap(XX,-skewXJG); W = -JXG + XX*Omega; W = -0.5*(W+W');
+            PG = G - XJ*(0.5*JXG) - JX*Omega + XJ*(0.5*(XX*Omega));
+            if invH
+                PGXJ = -PG*(XJ)'; H = PGXJ + PGXJ'; HJ = [-H(:,n+1:end), H(:,1:n)]; RJX = H*JX;
+            else
+                U =  [-PG, XJ]; V = [XJ, -PG];	VJU = V'*[-U(n+1:end,:); U(1:n,:)];
+                VJX = V'*JX;
+            end
         end
     else
         if metric == 1
@@ -290,8 +308,8 @@ for itr = 1 : opts.mxitr
     
     
     % ----------------------- stop criteria ----------------------
-%     crit(itr,:) = [nrmG, XDiff, FDiff];
-%     mcrit = mean(crit(itr-min(nt,itr)+1:itr, :),1);
+    %     crit(itr,:) = [nrmG, XDiff, FDiff];
+    %     mcrit = mean(crit(itr-min(nt,itr)+1:itr, :),1);
     if nrmG < gtol
         %if nrmG < gtol*nrmG0
         %if (XDiff < xtol && nrmG < gtol ) || FDiff < ftol
@@ -327,4 +345,3 @@ function a = iprod(x,y)
 a = real(sum(sum(x.*y)));
 % a = real(sum(sum(conj(x).*y)));
 end
-
