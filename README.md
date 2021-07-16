@@ -31,7 +31,7 @@ where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity
 ## References
 [Bin Gao](https://www.gaobin.cc/), [Nguyen Thanh Son](https://sites.google.com/view/ntson), [P.-A. Absil](https://sites.uclouvain.be/absil/), [Tatjana Stykel](https://www.uni-augsburg.de/en/fakultaet/mntf/math/prof/numa/team/tatjana-stykel/)
 1. [Riemannian optimization on the symplectic Stiefel manifold](https://doi.org/10.1137/20M1348522), SIAM Journal on Optimization, 31-2 (2021), 1546-1575.
-2. [Geometry of the symplectic Stiefel manifold endowed with the Euclidean metric](https://arxiv.org/abs/2103.00459)
+2. [Geometry of the symplectic Stiefel manifold endowed with the Euclidean metric](https://doi.org/10.1007/978-3-030-80209-7_85), Geometric Science of Information: 5th International Conference, GSI 2021, Lecture Notes in Computer Science, 12829 (2021), 789–796.
 3. [Symplectic eigenvalue problem via trace minimization and Riemannian optimization](https://arxiv.org/abs/2101.02618)
 
 ## Authors
