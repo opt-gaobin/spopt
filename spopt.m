@@ -40,7 +40,7 @@ function [X, out]= spopt(X, fun, opts, varargin)
 % -------------------------------------
 % Reference:
 %   Bin Gao, Nguyen Thanh Son, P.-A. Absil, Tatjana Stykel
-%   1. Riemannian optimization on the symplectic Stiefel manifold, SIAM Journal on Optimization, 31-2 (2021), 1546-1575.
+%   1. Riemannian optimization on the symplectic Stiefel manifold
 %   2. Geometry of the symplectic Stiefel manifold endowed with the Euclidean metric
 % Author: Bin Gao (https://www.gaobin.cc)
 %   Version 0.1 ... 2019/11
