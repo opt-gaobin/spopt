@@ -25,10 +25,6 @@ if nargin < 3
     tol = 1e-15;
 end
 [n,k] = size(A); k = k/2;n = n/2;
-P = zeros(2*k,2*k);
-for i = 1:k
-    P(2*i-1,i) = 1;P(2*i,k+i) = 1;
-end
 %A = A*P';
 A = mulPT(A);
 S = zeros(size(A));
