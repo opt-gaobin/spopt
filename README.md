@@ -20,7 +20,7 @@ where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity
 
 > min trace(X'AXN-2BX'), s.t.  X' J2n X = J2p.
   
-4. symplectic eigenvalue problem:
+4. symplectic eigenvalue computation of spd or spsd:
 
 > min trace(X'AX), s.t.  X' J2n X = J2p.
   
@@ -29,18 +29,21 @@ where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity
 > min ||M-XX^\dag M||, s.t.  X' J2n X = J2p, where X^\dag = J2p' X' J2n
 
 ## References
-[Bin Gao](https://www.gaobin.cc/), [Nguyen Thanh Son](https://sites.google.com/view/ntson), [P.-A. Absil](https://sites.uclouvain.be/absil/), [Tatjana Stykel](https://www.uni-augsburg.de/en/fakultaet/mntf/math/prof/numa/team/tatjana-stykel/)
+[P.-A. Absil](https://sites.uclouvain.be/absil/), [Bin Gao](https://www.gaobin.cc/), [Nguyen Thanh Son](https://sites.google.com/view/ntson), [Tatjana Stykel](https://www.uni-augsburg.de/en/fakultaet/mntf/math/prof/numa/team/tatjana-stykel/)
 1. [Riemannian optimization on the symplectic Stiefel manifold](https://doi.org/10.1137/20M1348522), SIAM Journal on Optimization, 31-2 (2021), 1546-1575.
 2. [Geometry of the symplectic Stiefel manifold endowed with the Euclidean metric](https://doi.org/10.1007/978-3-030-80209-7_85), Geometric Science of Information: 5th International Conference, GSI 2021, Lecture Notes in Computer Science, 12829 (2021), 789–796.
 3. [Computing symplectic eigenpairs of symmetric positive-definite matrices via trace minimization and Riemannian optimization](https://doi.org/10.1137/21M1390621),  SIAM Journal on Matrix Analysis and Applications, 42-4 (2021), 1732–1757.
 4. Symplectic model order reduction of Hamiltonian systems: a Riemannian optimization approach
 
 ## Authors
++ [P.-A. Absil](https://sites.uclouvain.be/absil/) (UCLouvain, Belgium)
 + [Bin Gao](https://www.gaobin.cc/) (UCLouvain, Belgium)
 + [Nguyen Thanh Son](https://sites.google.com/view/ntson) (Thai Nguyen University of Sciences, Vietnam)
++ [Tatjana Stykel](https://www.uni-augsburg.de/en/fakultaet/mntf/math/prof/numa/team/tatjana-stykel/) (University of Augsburg, Germany)
+
 
 ## Copyright
-Copyright (C) 2020, Bin Gao, Nguyen Thanh Son, P.-A. Absil, Tatjana Stykel
+Copyright (C) 2020, P.-A. Absil, Bin Gao, Nguyen Thanh Son, Tatjana Stykel
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
