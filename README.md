@@ -29,11 +29,10 @@ where X is a 2n-by-2p matrix, J2n = [0 In; -In 0], and In is the n-by-n identity
 > min ||M-XX^\dag M||, s.t.  X' J2n X = J2p, where X^\dag = J2p' X' J2n
 
 ## References
-[P.-A. Absil](https://sites.uclouvain.be/absil/), [Bin Gao](https://www.gaobin.cc/), [Nguyen Thanh Son](https://sites.google.com/view/ntson), [Tatjana Stykel](https://www.uni-augsburg.de/en/fakultaet/mntf/math/prof/numa/team/tatjana-stykel/)
 1. [Riemannian optimization on the symplectic Stiefel manifold](https://doi.org/10.1137/20M1348522), SIAM Journal on Optimization, 31-2 (2021), 1546-1575.
 2. [Geometry of the symplectic Stiefel manifold endowed with the Euclidean metric](https://doi.org/10.1007/978-3-030-80209-7_85), Geometric Science of Information: 5th International Conference, GSI 2021, Lecture Notes in Computer Science, 12829 (2021), 789–796.
 3. [Computing symplectic eigenpairs of symmetric positive-definite matrices via trace minimization and Riemannian optimization](https://doi.org/10.1137/21M1390621),  SIAM Journal on Matrix Analysis and Applications, 42-4 (2021), 1732–1757.
-4. Symplectic model order reduction of Hamiltonian systems: a Riemannian optimization approach
+4. [Optimization on the symplectic Stiefel manifold: SR decomposition-based retraction and applications](https://arxiv.org/abs/2211.09481), arXiv:2211.09481, (2022).
 
 ## Authors
 + [P.-A. Absil](https://sites.uclouvain.be/absil/) (UCLouvain, Belgium)
